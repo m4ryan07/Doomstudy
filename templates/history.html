@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOOM STUDY — War Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <canvas id="matrix-canvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+
+    <div class="container">
+        <header class="site-header">
+            <div class="logo-wrap">
+                <div class="skull-icon">☠</div>
+                <span class="logo-text">DOOM<span class="accent">STUDY</span></span>
+            </div>
+            <div class="nav-right">
+                <span class="role-badge mono">// WAR JOURNAL</span>
+                <a href="/" class="btn-exit">✕ HOME</a>
+            </div>
+        </header>
+
+        <div class="results-header">
+            <p class="mono accent-text">BATTLE RECORDS</p>
+            <h1 class="glitch small-glitch" data-text="INTERVIEW HISTORY">INTERVIEW HISTORY</h1>
+            <p class="tagline-small">Every session. Every failure. Every lesson.</p>
+        </div>
+
+        {% if history %}
+            {% for item in history %}
+            <div class="result-card" style="animation-delay: {{ loop.index0 * 0.15 }}s">
+
+                <div class="result-q-header">
+                    <span class="q-number mono">SESSION_{{ loop.index }}</span>
+                    <div class="q-line"></div>
+                    <span class="mono timestamp-badge">{{ item.created_at }}</span>
+                </div>
+
+                <div class="role-tag mono">
+                    <span class="accent-text">▶ {{ item.job_role | upper }}</span>
+                </div>
+
+                <p class="question-text">{{ item.question }}</p>
+
+                <div class="answer-block">
+                    <span class="mono block-label">> YOUR ANSWER</span>
+                    <p class="answer-text">{{ item.answer }}</p>
+                </div>
+
+                <div class="feedback-block">
+                    <div class="feedback-header">
+                        <span class="skull-small">☠</span>
+                        <span class="mono block-label accent-text">AI EVALUATION</span>
+                    </div>
+                    <p class="feedback-text">{{ item.feedback }}</p>
+                </div>
+
+            </div>
+            {% endfor %}
+
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-skull">☠</div>
+                <p class="mono">NO BATTLES RECORDED YET.</p>
+                <p class="empty-sub">Your war journal is empty. Go face the arena.</p>
+                <a href="/" class="btn-doom inline-btn" style="margin-top: 30px;">
+                    <span class="btn-text">START A SESSION</span>
+                    <span class="btn-arrow">▶▶</span>
+                </a>
+            </div>
+        {% endif %}
+
+        <div class="results-footer">
+            <p class="mono footer-msg">History is just <span class="accent-text">proof of survival.</span></p>
+            <a href="/" class="btn-doom inline-btn">
+                <span class="btn-text">NEW SESSION</span>
+                <span class="btn-arrow">▶▶</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

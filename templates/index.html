@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DOOM STUDY — Face Your Truth</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+
+    <div class="container">
+
+        <!-- ===================================================== -->
+        <!-- HEADER -->
+        <!-- ===================================================== -->
+        <header class="site-header">
+
+            <div class="logo-wrap">
+                <div class="skull-icon">☠</div>
+
+                <span class="logo-text">
+                    DOOM<span class="accent">STUDY</span>
+                </span>
+            </div>
+
+            <div class="status-bar">
+                <span class="status-dot"></span>
+
+                <span class="mono">
+                    SYSTEM ONLINE
+                </span>
+            </div>
+
+        </header>
+
+        <!-- ===================================================== -->
+        <!-- NAVIGATION BUTTONS -->
+        <!-- ===================================================== -->
+        <div class="nav-buttons">
+
+            <a href="/dashboard" class="btn-doom small-btn">
+                <span class="btn-text">DASHBOARD</span>
+            </a>
+
+            <a href="/history" class="btn-doom small-btn">
+                <span class="btn-text">WAR JOURNAL</span>
+            </a>
+
+            <a href="/memory" class="btn-doom small-btn">
+                <span class="btn-text">MEMORY</span>
+            </a>
+
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- HERO SECTION -->
+        <!-- ===================================================== -->
+        <main class="hero">
+
+            <div class="glitch-wrapper">
+
+                <h1
+                    class="glitch"
+                    data-text="ARE YOU READY TO BLEED?"
+                >
+                    ARE YOU READY TO BLEED?
+                </h1>
+
+            </div>
+
+            <p class="tagline">
+                Most candidates think they're prepared.
+                <br>
+
+                <span class="accent-text">
+                    They leave broken.
+                </span>
+
+                Will you be different?
+            </p>
+
+            <!-- ================================================= -->
+            <!-- TERMINAL BOX -->
+            <!-- ================================================= -->
+            <div class="terminal-box">
+
+                <div class="terminal-header">
+
+                    <span class="t-dot red"></span>
+                    <span class="t-dot yellow"></span>
+                    <span class="t-dot green"></span>
+
+                    <span class="mono terminal-title">
+                        // INITIALIZE SESSION
+                    </span>
+
+                </div>
+
+                <form
+                    action="/interview"
+                    method="POST"
+                    id="mainForm"
+                >
+
+                    <div class="input-group-custom">
+
+                        <label class="mono label-text">
+                            > TARGET_ROLE:
+                        </label>
+
+                        <input
+                            type="text"
+                            name="job_role"
+                            class="terminal-input"
+                            placeholder="e.g. Backend Developer"
+                            autocomplete="off"
+                            required
+                        >
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn-doom"
+                        id="submitBtn"
+                    >
+
+                        <span class="btn-text">
+                            ENTER THE ARENA
+                        </span>
+
+                        <span class="btn-arrow">
+                            ▶▶
+                        </span>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- ================================================= -->
+            <!-- STATS -->
+            <!-- ================================================= -->
+            <div class="stats-row">
+
+                <div class="stat">
+                    <span class="stat-num">3</span>
+
+                    <span class="stat-label mono">
+                        QUESTIONS
+                    </span>
+                </div>
+
+                <div class="stat-divider">|</div>
+
+                <div class="stat">
+                    <span class="stat-num">AI</span>
+
+                    <span class="stat-label mono">
+                        JUDGE
+                    </span>
+                </div>
+
+                <div class="stat-divider">|</div>
+
+                <div class="stat">
+                    <span class="stat-num">0</span>
+
+                    <span class="stat-label mono">
+                        MERCY
+                    </span>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- ===================================================== -->
+        <!-- ERROR BANNER -->
+        <!-- ===================================================== -->
+        {% if error %}
+
+        <div class="error-banner mono">
+            ⚠ {{ error }}
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- LOADING OVERLAY -->
+    <!-- ========================================================= -->
+    <div
+        id="loading-overlay"
+        class="loading-overlay hidden"
+    >
+
+        <div class="loading-inner">
+
+            <div class="skull-loader">
+                ☠
+            </div>
+
+            <p class="mono">
+                PREPARING YOUR DOOM...
+            </p>
+
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- SCRIPTS -->
+    <!-- ========================================================= -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <script>
+
+        document.getElementById('mainForm').onsubmit = () => {
+
+            document
+                .getElementById('loading-overlay')
+                .classList.remove('hidden');
+        };
+
+    </script>
+
+</body>
+
+</html>

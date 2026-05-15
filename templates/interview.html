@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOOM STUDY — {{ role }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <canvas id="matrix-canvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+
+    <div class="container">
+        <header class="site-header">
+            <div class="logo-wrap">
+                <div class="skull-icon">☠</div>
+                <span class="logo-text">DOOM<span class="accent">STUDY</span></span>
+            </div>
+            <div class="nav-right">
+                <span class="role-badge mono">// {{ role | upper }}</span>
+                <a href="/" class="btn-exit">✕ ABORT</a>
+            </div>
+        </header>
+
+        <div class="interview-header">
+            <p class="mono accent-text">INTERROGATION IN PROGRESS</p>
+            <h2 class="section-title">Answer carefully. The AI sees everything.</h2>
+        </div>
+
+        <form action="/evaluate" method="POST" id="evalForm">
+            <input type="hidden" name="job_role" value="{{ role }}">
+
+            {% for q in questions %}
+            <div class="question-card" style="animation-delay: {{ loop.index0 * 0.15 }}s">
+                <div class="q-header">
+                    <span class="q-number mono">Q_0{{ loop.index }}</span>
+                    <div class="q-line"></div>
+                </div>
+                <p class="question-text">{{ q }}</p>
+                <input type="hidden" name="question_{{ loop.index }}" value="{{ q }}">
+                <div class="textarea-wrap">
+                    <label class="mono label-text">> YOUR_RESPONSE:</label>
+                    <textarea name="answer_{{ loop.index }}" class="terminal-textarea" rows="6"
+                        placeholder="Type your answer here. No pressure... just your entire career on the line." required></textarea>
+                </div>
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-doom full-width" id="submitBtn">
+                <span class="btn-text">SUBMIT FOR JUDGMENT</span>
+                <span class="btn-arrow">▶▶</span>
+            </button>
+        </form>
+    </div>
+
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-inner">
+            <div class="skull-loader">☠</div>
+            <p class="mono">THE AI JUDGES YOUR SOUL...</p>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        document.getElementById('evalForm').onsubmit = () => {
+            document.getElementById('loading-overlay').classList.remove('hidden');
+        };
+    </script>
+</body>
+</html>

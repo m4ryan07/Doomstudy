@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOOM STUDY — Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <canvas id="matrix-canvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+
+    <div class="container">
+        <header class="site-header">
+            <div class="logo-wrap">
+                <div class="skull-icon">☠</div>
+                <span class="logo-text">DOOM<span class="accent">STUDY</span></span>
+            </div>
+            <div class="nav-right">
+                <span class="role-badge mono">// COMMAND CENTER</span>
+                <a href="/" class="btn-exit">✕ HOME</a>
+            </div>
+        </header>
+
+        <div class="results-header">
+            <p class="mono accent-text">PERFORMANCE METRICS</p>
+            <h1 class="glitch small-glitch" data-text="ANALYTICS DASHBOARD">ANALYTICS DASHBOARD</h1>
+            <p class="tagline-small">Numbers don't lie. Are you improving?</p>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="stat-card" style="animation-delay: 0s">
+                <span class="mono stat-card-label">TOTAL SESSIONS</span>
+                <div class="stat-card-num">{{ total_interviews }}</div>
+                <span class="mono stat-card-sub">BATTLES FOUGHT</span>
+            </div>
+            <div class="stat-card" style="animation-delay: 0.15s">
+                <span class="mono stat-card-label">AVERAGE SCORE</span>
+                <div class="stat-card-num">{{ average_score }}<span class="stat-card-denom">/10</span></div>
+                <span class="mono stat-card-sub">AI RATING</span>
+            </div>
+        </div>
+
+        <div class="table-wrap" style="animation-delay: 0.3s">
+            <div class="table-header-bar">
+                <span class="mono accent-text">▶ SESSION LOG</span>
+            </div>
+            <table class="doom-table">
+                <thead>
+                    <tr>
+                        <th class="mono">ROLE</th>
+                        <th class="mono">SCORE</th>
+                        <th class="mono">DATE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in history %}
+                    <tr class="table-row">
+                        <td>{{ item.job_role | upper }}</td>
+                        <td>
+                            <span class="score-badge {% if item.score >= 7 %}score-high{% elif item.score >= 4 %}score-mid{% else %}score-low{% endif %}">
+                                {{ item.score }}/10
+                            </span>
+                        </td>
+                        <td class="mono dim-text">{{ item.created_at }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" class="mono empty-row">NO DATA. GO FIGHT SOMETHING.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="results-footer">
+            <p class="mono footer-msg">Data is your <span class="accent-text">weapon.</span> Use it.</p>
+            <a href="/" class="btn-doom inline-btn">
+                <span class="btn-text">NEW SESSION</span>
+                <span class="btn-arrow">▶▶</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
